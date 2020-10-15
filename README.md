@@ -1,2 +1,2 @@
 # garis-point-of-sale
-projek
+npm install
