@@ -1,2 +1,3 @@
 # garis-point-of-sale
-npm install
+git clone https://github.com/dibyopra/garis-point-of-sale.git "foldername"
+go to "foldername" npm install
