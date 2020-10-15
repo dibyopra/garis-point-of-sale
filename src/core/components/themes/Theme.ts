@@ -76,13 +76,13 @@ export const theme = createTheme({
     },
     button: {
       fontFamily: 'Poppins-Medium',
-      fontSize: 14,
+      fontSize: 15,
       lineHeight: 18,
       color: 'secondary',
     },
     subTitle: {
       fontFamily: 'Poppins-Medium',
-      fontSize: 14,
+      fontSize: 15,
       lineHeight: 18,
       color: 'text',
     },

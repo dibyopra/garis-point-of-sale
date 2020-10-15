@@ -14,6 +14,7 @@ import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {TransactionRoutes} from '@core/interfaces';
 import {useNavigation} from '@react-navigation/native';
 import {useProductConsumer} from '@core/context';
+import {formatRp} from '@core/helpers';
 
 const {width} = Dimensions.get('window');
 
@@ -22,7 +23,7 @@ interface FooterProps {
 }
 
 export const Footer = ({}: FooterProps): JSX.Element => {
-  const {BORDER_RADIUS} = useResponsive();
+  const {BORDER_RADIUS, PADDING} = useResponsive();
   const {colors} = useTheme();
   const {product, productTotal} = useProductConsumer();
   const emptyProduct = product.length === 0;
@@ -33,7 +34,7 @@ export const Footer = ({}: FooterProps): JSX.Element => {
     <Box
       borderTopLeftRadius={BORDER_RADIUS}
       backgroundColor="secondary"
-      paddingVertical="l"
+      padding={PADDING}
       flexDirection="row"
       justifyContent="center"
       alignItems="center">
@@ -56,7 +57,7 @@ export const Footer = ({}: FooterProps): JSX.Element => {
             <Text variant="button" color="white">
               {emptyProduct
                 ? 'Keranjang Kosong'
-                : `${product.length} item | ${productTotal}`}
+                : `${product.length} item | ${formatRp(productTotal)}`}
             </Text>
           </Box>
           {!emptyProduct && (

@@ -2,7 +2,7 @@ import React from 'react';
 import {RectButton} from 'react-native-gesture-handler';
 import {StyleProp, ViewStyle} from 'react-native';
 
-import {Box, Text, theme, useTheme} from '../themes';
+import { Text, theme, useTheme} from '../themes';
 
 interface ButtonProps {
   variant?: 'default' | 'primary' | 'transparent';
@@ -42,13 +42,8 @@ export const Button = (props: ButtonProps) => {
       : 'transparent';
   const color: keyof typeof theme.colors =
     variant == 'primary' ? textColor || 'white' : 'secondary';
-  const {borderRadii, spacing, colors} = useTheme();
+  const {spacing, colors} = useTheme();
   return (
-    // <Box
-    //   borderWidth={variant === 'default' ? 1 : 0}
-    //   backgroundColor={backgroundColor}
-    //   borderRadius="xs"
-    //   style={[{padding: 0.5}]}>
       <RectButton
         enabled={enabled}
         rippleColor="rgba(12,13,52,0.1)"
@@ -57,25 +52,18 @@ export const Button = (props: ButtonProps) => {
           backgroundColor: colors[backgroundColor],
           height,
           width: width ? width : '100%',
-          borderRadius: borderRadii.xs,
+          borderRadius: BUTTON_HEIGHT/2,
           padding: spacing.m,
           justifyContent:"center",
           flexDirection: 'row',
           alignItems: 'center',
         },style]}>
-        {/* <Box
-          width="100%"
-          flexDirection="row"
-          alignItems="flex-start"
-          justifyContent={icon ? undefined : 'center'}> */}
         {icon}
         {label && (
-          <Text variant={textVariant} color={color} paddingLeft="xs">
+          <Text variant={textVariant} color={color} paddingLeft="xs" style={{marginTop:2}} >
             {label}
           </Text>
         )}
-        {/* </Box> */}
       </RectButton>
-    // </Box>
   );
 };

@@ -85,6 +85,7 @@ export interface ProductNavigationProps<RouteName extends keyof ProductRoutes> {
 
 export type ProductRoutes = {
   Product: undefined;
+  Search: undefined;
 };
 
 export interface CartNavigationProps<RouteName extends keyof CartRoutes> {
@@ -94,4 +95,5 @@ export interface CartNavigationProps<RouteName extends keyof CartRoutes> {
 
 export type CartRoutes = {
   Cart: undefined;
+  Checkout: undefined;
 };

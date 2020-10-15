@@ -72,7 +72,7 @@ const data: productItemInterface[] = [
   },
 ];
 
-export const ProductScreen = ({}: ProductNavigationProps<
+export const ProductScreen = ({navigation}: ProductNavigationProps<
   'Product'
 >): JSX.Element => {
   const {spacing} = useTheme();
@@ -89,7 +89,7 @@ export const ProductScreen = ({}: ProductNavigationProps<
         <Header
           title="Produk"
           drawer
-          iconRight={{name: 'search', onPress: () => true}}
+          iconRight={{name: 'search', onPress: () => navigation.push("Search")}}
         />
       }>
       <ScrollView

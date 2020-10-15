@@ -4,8 +4,8 @@ import {theme} from '@core/components';
 export const useResponsive = () => {
 
   const padding = useResponsiveProp<typeof theme, keyof typeof theme.spacing>({
-    smallPhone: 'm',
-    phone: 'l',
+    smallPhone: 's',
+    phone: 'm',
   });
 
   const border_radius = useResponsiveProp<typeof theme, keyof typeof theme.spacing>({

@@ -12,6 +12,7 @@ interface RoundedIconButtonProps {
   backgroundColor?: keyof typeof theme.colors;
   aspectRation?: number;
   style?: StyleProp<ViewStyle>;
+  enabled?:boolean;
 }
 
 export const RoundedIconButton = (
@@ -21,6 +22,7 @@ export const RoundedIconButton = (
     size = 40,
     onPress,
     iconName,
+    enabled=true,
     backgroundColor = "transparent",
     iconColor = 'secondary',
     aspectRation = 0.7,
@@ -42,7 +44,7 @@ export const RoundedIconButton = (
         style,
       ]}
       rippleColor="rgba(12,13,52,0.1)"
-      {...{onPress}}>
+      {...{onPress,enabled}}>
       <Icon color={theme.colors[iconColor]} name={iconName} size={ICON_SIZE} />
     </RectButton>
   );

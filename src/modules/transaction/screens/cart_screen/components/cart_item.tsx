@@ -2,12 +2,10 @@ import React, {useState, useRef} from 'react';
 import {
   Box,
   Text,
-  RectButton,
   useTheme,
   Dimensions,
   RoundedIconButton,
   Animated,
-  TouchableOpacity,
   ModalInfo,
 } from '@core/components';
 import {formatRp} from '@core/helpers';
@@ -29,7 +27,8 @@ export const CartItem = ({item}: CartItemProps): JSX.Element => {
   const width = wWidth - spacing[PADDING] * 2;
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const {name, price, qty, id} = item;
+  const {name, price, qty, id, stock, uom} = item;
+  const [tempStock, setTempStock] = useState(stock - qty);
 
   const cardAnimationValue = useRef(new Animated.Value(0)).current;
   const buttonScale = useRef(new Animated.Value(0)).current;
@@ -48,6 +47,18 @@ export const CartItem = ({item}: CartItemProps): JSX.Element => {
       duration: 300,
       useNativeDriver: false,
     }).start(() => animatedButton());
+  };
+
+  const handleIncrement = (id: string) => {
+    increment(id);
+    if (tempStock > 0) {
+      setTempStock((currentStock) => currentStock - 1);
+    }
+  };
+
+  const handleDecrement = (id: string) => {
+    decrement(id);
+    setTempStock((currentStock) => currentStock + 1);
   };
 
   return (
@@ -71,9 +82,12 @@ export const CartItem = ({item}: CartItemProps): JSX.Element => {
         />
         <Box flex={1} padding="s">
           <Box flex={1}>
-            <Text variant="title">{name}</Text>
+            <Text variant="button">{name.toUpperCase()}</Text>
+            <Text variant="info" color={tempStock > 0 ? 'info' : 'danger'}>
+              {tempStock > 0 ? `Tersisa ${tempStock} ${uom}` : 'Stok habis'}
+            </Text>
           </Box>
-          <Text variant="title" color="primary">
+          <Text variant="subTitle" color="primary">
             {formatRp(price)}
           </Text>
         </Box>
@@ -104,7 +118,7 @@ export const CartItem = ({item}: CartItemProps): JSX.Element => {
         <Box width={50} justifyContent="center" alignItems="center">
           <Animated.View style={{transform: [{scale: buttonScale}]}}>
             <RoundedIconButton
-              onPress={() => increment(id)}
+              onPress={() => handleIncrement(id)}
               aspectRation={0.6}
               size={35}
               iconName="plus"
@@ -115,7 +129,7 @@ export const CartItem = ({item}: CartItemProps): JSX.Element => {
           <Box height={10} />
           <Animated.View style={{transform: [{scale: buttonScale}]}}>
             <RoundedIconButton
-              onPress={() => decrement(id)}
+              onPress={() => handleDecrement(id)}
               aspectRation={0.6}
               size={35}
               iconName="minus"

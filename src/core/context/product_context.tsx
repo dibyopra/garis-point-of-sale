@@ -11,6 +11,7 @@ interface ProductContextInterface {
   increment: (id: string) => void;
   decrement: (id: string) => void;
   removeItem: (id: string) => void;
+  getItem: (id: string) => productCartInterface | undefined;
 }
 
 const ProductContext = createContext<ProductContextInterface | undefined>(
@@ -25,27 +26,18 @@ const ProductProvider = ({children}: productProps): JSX.Element => {
   const {product, setProduct, productTotal, setProductTotal} = useProduct();
 
   useEffect(() => {
-    console.log({product});
-
     getTotal();
-    console.log({productTotal});
-  }, [product, setProduct]);
+  }, [product]);
 
   const getTotal = () => {
-    console.log('set total', {product});
-
     let total = 0;
-    product.map((item) => {
-      (total += item.total), console.log(item.total);
-    });
+    product.map((item) => (total += item.total));
     setProductTotal(total);
   };
 
   const increment = (id: string) => {
-    console.log('increment');
-
     let tempProduct = [...product];
-    const selectedProduct = tempProduct.find((item) => item.id === id);
+    const selectedProduct = getItem(id);
 
     if (selectedProduct) {
       if (selectedProduct.stock == selectedProduct.qty) {
@@ -56,12 +48,11 @@ const ProductProvider = ({children}: productProps): JSX.Element => {
         setProduct([...tempProduct]);
       }
     }
-    console.log({selectedProduct});
   };
 
   const decrement = (id: string) => {
     let tempProduct = [...product];
-    const selectedProduct = tempProduct.find((item) => item.id === id);
+    const selectedProduct = getItem(id);
     if (selectedProduct) {
       if (selectedProduct.qty === 1) {
         removeItem(id);
@@ -79,6 +70,12 @@ const ProductProvider = ({children}: productProps): JSX.Element => {
     setProduct([...tempProduct]);
   };
 
+  const getItem = (id: string): productCartInterface | undefined => {
+    let tempProduct = [...product];
+    const selectedProduct = tempProduct.find((item) => item.id == id);
+    return selectedProduct;
+  };
+
   const addToProduct = (item: productItemInterface) => {
     let tempProduct = [...product];
     const {code, name, price, uom, id, stock} = item;
@@ -92,7 +89,7 @@ const ProductProvider = ({children}: productProps): JSX.Element => {
       qty: 0,
       total: 0,
     };
-    const isExist = tempProduct.find((item) => item.id == tempItem.id);
+    const isExist = getItem(tempItem.id);
     if (isExist) {
       increment(item.id);
     } else {
@@ -112,6 +109,7 @@ const ProductProvider = ({children}: productProps): JSX.Element => {
         increment,
         decrement,
         removeItem,
+        getItem,
       }}>
       {children}
     </ProductContext.Provider>

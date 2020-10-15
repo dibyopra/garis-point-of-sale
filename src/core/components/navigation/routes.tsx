@@ -16,7 +16,7 @@ export const Routes = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
         }}>
-        {/* <Stack.Screen component={LoginScreen} name="Authentication" /> */}
+        <Stack.Screen component={LoginScreen} name="Authentication" />
         <Stack.Screen component={HomeStack} name="Home" />
       </Stack.Navigator>
     </NavigationContainer>

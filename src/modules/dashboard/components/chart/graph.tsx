@@ -4,6 +4,7 @@ import {lerp} from '@dashboard/helpers';
 import {formatK} from '@core/helpers';
 import {Underlay, MARGIN} from './underlay';
 import {ScrollView} from 'react-native';
+import { useResponsive } from '@core/hooks';
 
 const {width: wWidth} = Dimensions.get('window');
 const aspectRatio = 195 / 305;
@@ -19,7 +20,8 @@ interface GraphProps {
 
 export const Graph = ({data}: GraphProps): JSX.Element => {
   const {spacing} = useTheme();
-  const canvasWidth = wWidth - spacing.l * 2;
+  const {PADDING} = useResponsive()
+  const canvasWidth = wWidth - spacing[PADDING] * 2;
   const canvasHeight = canvasWidth * aspectRatio;
   const height = canvasHeight - spacing[MARGIN];
   const step = 75;
